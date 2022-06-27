@@ -1,0 +1,122 @@
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title></title>
+    <base href="/"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{image/cinema-logo.svg}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script th:href="@{js/getCookie.js}" type="text/javascript"></script>
+    <script th:href="@{js/selectLang.js}" type="text/javascript"></script>
+
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        {
+            font-size: 1.125rem
+        ;
+            text-anchor: middle
+        ;
+            -webkit-user-select: none
+        ;
+            -moz-user-select: none
+        ;
+            user-select: none
+        ;
+        }
+
+        @media (min-width: 768px) { {
+            font-size: 3.5rem;
+        }
+        }
+    </style>
+
+    <link th:href="@{css/header.css}" rel="stylesheet">
+</head>
+<body>
+<header class="px-3 bg-dark text-white">
+    <div class="container-header">
+        <div class="d-flex flex-wrap align-items-center justify-content-center-max-620">
+            <img class="button-logo" th:src="@{image/cinema-logo.svg}"
+                 width="48" height="48" alt="Cinema Logo">
+
+            <ul class="nav justify-content-start mb-md-0 ht-1" id="ref">
+                <li><a th:href="@{/main}" class="header-reference" th:text="#{label.main}"></a>
+                </li>
+                <li><a href="#" class="header-reference" th:text="#{label.about}"></a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form class="text-end" method="get"
+                          th:action="@{admin/movies}">
+                        <button type="submit" class="header-reference" th:text="#{label.administration}">
+                        </button>
+                    </form>
+                </li>
+            </ul>
+
+
+            <div class="nav ht-1 w-50 ml-auto justify-content-end align-content-center">
+                <ul class="nav justify-content-start mb-md-0 ht-1 me-2" th:if="${dates != null}">
+                    <li>
+                        <form th:action="@{main}">
+                            <select name="date" class="header-reference" onchange="this.form.submit()">
+                                <option th:text="#{label.date}"></option>
+                                <option th:each="date : ${dates}" th:attr="name='date'" th:text="${date}" th:value="${date}"></option>
+                            </select>
+                        </form>
+                    </li>
+                </ul>
+
+                <div class="dropdown mx-4 flex-div-center" sec:authorize="isAuthenticated()">
+                    <a class="dropbtn flex-item-center">
+                        <img th:src="@{image/default-user-icon.svg}"
+                             width="30" height="30" alt="logo"
+                             class="rounded-circle">
+                    </a>
+
+
+                    <div class="dropdown-content">
+                        <form method="get" th:action="@{/user}">
+                            <button type="submit" class="dropdown-button" th:text="#{label.myProfile}">
+                            </button>
+                        </form>
+                        <form method="post" th:action="@{user/logout}">
+                            <button type="submit" class="dropdown-button" th:text="#{label.logout}">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <form method="get" th:action="@{/login}" sec:authorize="isAnonymous()">
+                    <button type="submit" class="btn btn-outline-light padding-custom mx-2" th:text="#{label.login}">
+                    </button>
+                </form>
+                <form method="get" th:action="@{/guest/registration}" sec:authorize="isAnonymous()">
+                    <button type="submit" class="btn btn-warning padding-custom" th:text="#{label.sign-up}">
+                    </button>
+                </form>
+
+                <select class="ms-3" id="locales">
+                    <option th:text="#{label.lang}"></option>
+                    <option value="en_US" th:text="#{lang.en}"></option>
+                    <option value="ua_UA" th:text="#{lang.ua}"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+</header>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+            let selectedOption = $('#locales').val();
+            if (selectedOption !== ''){
+                window.location.replace('main?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
+</body>
+</html>

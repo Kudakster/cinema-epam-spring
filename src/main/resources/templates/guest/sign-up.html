@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <base href="/"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{image/cinema-logo.svg}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script th:src="@{js/sign-up.js}" type="text/javascript"></script>
+    <script th:src="@{js/validateLogin.js}" type="text/javascript"></script>
+    <script th:src="@{js/setFormStatus.js}" type="text/javascript"></script>
+
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{css/cinema.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/sign-up.css}" rel="stylesheet">
+
+</head>
+<body>
+<div th:insert="/parts/header"></div>
+<div class="container margin-header">
+    <h3 class="align-items-center" th:text="#{h.registration}">Registration form</h3>
+
+    <form th:action="@{guest/sign-up}" th:object="${user}" method="post" id="basic-form">
+        <div class="mb-3 mt-3" id="login-form">
+            <label for="login" class="form-label" th:text="#{label.login}"></label>
+            <input type="text" class="form-control" id="login" th:placeholder="#{placeholder.enter.login}" name="login"
+                   maxlength="30" th:attr="name='userLogin'">
+        </div>
+
+        <div class="d-inline-block alert alert-danger" th:if="${#fields.hasErrors('global')}">
+            <p class="mb-0" th:each="err : ${#fields.allErrors()}" th:text="#{__${err}__}"></p>
+        </div>
+
+        <div class="mb-3" id="pwd-form">
+            <label for="pwd" class="form-label" th:text="#{label.password}"></label>
+            <input type="password" class="form-control" id="pwd" th:placeholder="#{placeholder.enter.password}" name="password"
+                   maxlength="30" th:attr="name='userPassword'">
+        </div>
+
+        <div class="mb-3" id="confirm-password-form">
+            <label for="confirm-password" class="form-label" th:text="#{label.confirmPassword}"></label>
+            <input type="password" class="form-control" id="confirm-password" th:placeholder="#{placeholder.enter.confirmPassword}"
+                   name="confirm-password">
+        </div>
+
+        <div class="mb-3 mt-3" id="firstname-form">
+            <label for="firstname" class="form-label" th:text="#{label.firstname}"></label>
+            <input type="text" class="form-control" id="firstname" th:placeholder="#{placeholder.enter.firstname}" name="firstname"
+                   maxlength="30" th:attr="name='userFirstname'">
+        </div>
+
+        <div class="mb-3 mt-3" id="surname-form">
+            <label for="surname" class="form-label" th:text="#{label.surname}"></label>
+            <input type="text" class="form-control" id="surname" th:placeholder="#{placeholder.enter.surname}" name="surname"
+                   maxlength="30" th:attr="name='userSurname'">
+        </div>
+
+        <div class="mb-3 mt-3" id="email-form">
+            <label for="email" class="form-label" th:text="#{label.email}"></label>
+            <input type="email" class="form-control" id="email" th:placeholder="#{placeholder.enter.email}" name="email"
+                   th:attr="name='userEmail'">
+        </div>
+
+        <div class="mb-3 mt-3" id="phone-number-form">
+            <label for="phone-number" class="form-label" th:text="#{label.phoneNumber}"></label>
+            <input type="text" class="form-control" id="phone-number" th:placeholder="#{placeholder.enter.phoneNumber}"
+                   name="phone-number" maxlength="13" th:attr="name='userPhonenumber'">
+        </div>
+
+        <div class="d-inline-block alert alert-danger" th:if="${!#fields.hasErrors('global') && #fields.hasErrors()}">
+            <p class="mb-0" th:each="err : ${#fields.allErrors()}" th:text="#{__${err}__}"></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submit-button" th:text="#{button.submit}" disabled></button>
+    </form>
+</div>
+</body>
+</html>

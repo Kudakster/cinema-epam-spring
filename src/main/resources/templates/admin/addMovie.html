@@ -1,0 +1,109 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <base href="/"/>
+    <link rel="shortcut icon" th:href="@{image/cinema-logo.svg}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+    <script th:src="@{js/add-movie.js}" type="text/javascript"></script>
+    <script th:src="@{js/imgPreview.js}" type="text/javascript"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/add-movie.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="/admin/admin"></div>
+<form th:action="@{admin/add-movie}" th:object="${movie}" method="post" id="basic-form"
+      enctype="multipart/form-data">
+    <div class="d-flex align-items-start justify-content-start mt-3 position-relative margin-side-bar">
+        <div class="d-inline-block w-50 ms-1">
+            <h3 th:text="#{h.movie.add}"></h3>
+
+            <div class="mb-3 mt-3" id="movie-name-form">
+                <label for="movie-name" class="form-label" th:text="#{label.movie.name}"></label>
+                <input type="text" class="form-control" id="movie-name" th:placeholder="#{placeholder.movie.enterName}"
+                       name="movie-name" maxlength="30" th:attr="name='movieName'" th:value="${movie.movieName}">
+            </div>
+
+            <div class="mb-3 mt-3" id="actors-form">
+                <label for="actors" class="form-label" th:text="#{label.movie.actors}"></label>
+                <input type="text" class="form-control" id="actors" th:placeholder="#{placeholder.movie.enterActors}"
+                       name="actors" maxlength="30" th:attr="name='movieActors'" th:value="${movie.movieActors}">
+            </div>
+
+            <div class="mb-3 mt-3" id="direction-form">
+                <label for="direction" class="form-label" th:text="#{label.movie.direction}"></label>
+                <input type="text" class="form-control" id="direction"
+                       th:placeholder="#{placeholder.movie.enterDirection}"
+                       name="direction" maxlength="30" th:attr="name='movieDirection'"
+                       th:value="${movie.movieDirection}">
+            </div>
+
+            <div class="mb-3 mt-3" id="genre-form">
+                <label for="genre" class="form-label" th:text="#{label.movie.genre}"></label>
+                <input type="text" class="form-control" id="genre" th:placeholder="#{placeholder.movie.enterGenre}"
+                       name="genre" maxlength="30" th:attr="name='movieGenre'" th:value="${movie.movieGenre}">
+            </div>
+
+            <div class="mb-3 mt-3" id="country-form">
+                <label for="country" class="form-label" th:text="#{label.movie.country}"></label>
+                <input type="text" class="form-control" id="country" th:placeholder="#{placeholder.movie.enterCountry}"
+                       name="country" maxlength="30" th:attr="name='movieCountry'" th:value="${movie.movieCountry}">
+            </div>
+
+            <div class="mb-3 mt-3" id="trailer-url-form">
+                <label for="trailer-url" class="form-label" th:text="#{label.movie.trailerURL}"></label>
+                <input type="text" class="form-control" id="trailer-url"
+                       th:placeholder="#{placeholder.movie.enterTrailerURL}"
+                       name="trailer-url" maxlength="50" th:attr="name='movieTrailerUrl'"
+                       th:value="${movie.movieTrailerUrl}">
+            </div>
+
+            <div class="mb-3 mt-3" id="release-date-form">
+                <label for="release-date" class="form-label" th:text="#{label.movie.release}"></label>
+                <input type="text" class="form-control" id="release-date"
+                       th:placeholder="#{placeholder.movie.enterRelease}"
+                       name="release-date" maxlength="10" th:attr="name='movieReleaseDate'"
+                       th:value="${movie.movieReleaseDate}">
+            </div>
+
+            <div class="mb-3 mt-3" id="duration-min-form">
+                <label for="duration-min" class="form-label" th:text="#{label.movie.duration}"></label>
+                <input type="text" class="form-control" id="duration-min"
+                       th:placeholder="#{placeholder.movie.enterDuration}"
+                       name="duration-min" maxlength="30" th:attr="name='movieDurationMin'"
+                       th:value="${movie.movieDurationMin}">
+            </div>
+
+            <div class="description-absolute" id="description-form">
+                <label for="description" class="form-label" th:text="#{label.movie.description}"></label>
+                <textarea type="text" class="form-control" id="description"
+                          th:placeholder="#{placeholder.movie.enterDescription}"
+                          name="description" maxlength="300" th:attr="name='movieDescription'"
+                          th:value="${movie.movieDescription}"></textarea>
+            </div>
+
+            <div class="d-inline-block alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                <p class="mb-0" th:each="err : ${#fields.allErrors()}" th:text="#{__${err}__}"></p>
+            </div>
+
+            <button type="submit" class="d-block btn btn-primary" id="submit-button" th:text="#{button.movie.add}" disabled>
+            </button>
+        </div>
+
+        <div class="d-inline-block container mt-5 ms-1 me-0 w-50 margin-header-double">
+            <h5 class="mb-3 mt-0 text-center" th:text="#{h.movie.upload}"></h5>
+            <div class="text-center">
+                <div class="image-preview mb-3" id="frames">
+                    <img width="300px" height="400px">
+                </div>
+                <label for="image" class="btn btn-primary" th:text="#{label.movie.upload}"></label>
+                <input type="file" class="mb-2" id="image" name="image" hidden>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

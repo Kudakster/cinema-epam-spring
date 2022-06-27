@@ -1,0 +1,98 @@
+header {
+    z-index: 100;
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+}
+
+.image-overflow {
+    height: 600px !important;
+    width: 400px !important;
+}
+
+.form-control {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+}
+
+.btn-right {
+    background-color: transparent;
+    position: fixed;
+    top: 50%;
+    right: 10px;
+}
+
+.btn-left {
+    background-color: transparent;
+    transition: 200ms;
+    position: fixed;
+    top: 50%;
+    left: 10px;
+}
+
+.video-container {
+    width: auto;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -100;
+}
+
+.text-container {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 70%;
+    left: 30%;
+    z-index: auto;
+    width: 40%;
+    height: auto;
+    --min-height: 119px;
+}
+
+.top-movie-text {
+    color: white;
+    line-height: 1.7em;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.rectangle {
+    width: 400px !important;
+    height: 600px !important;
+}
+
+iframe {
+    position: absolute;
+    top: 25.13vw;
+    left: 50%;
+    width: 101%;
+    height: 100vh;
+    border: 0;
+    transform: translate(-50%, -50%);
+}
+
+@media (min-aspect-ratio: 16/9) {
+    .video-container iframe {
+        /* height = 100 * (9 / 16) = 56.25 */
+        height: 56.25vw;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    .video-container iframe {
+        /* width = 100 / (9 / 16) = 177.777777 */
+        width: 101%;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-movie-text {
+        line-height: 1.2em;
+        font-size: 12px;
+    }
+    .container-header {
+        margin-right: 24px;
+        margin-left: 24px;
+    }
+}

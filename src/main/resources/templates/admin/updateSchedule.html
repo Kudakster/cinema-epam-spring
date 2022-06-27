@@ -1,0 +1,88 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <base href="/"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.js"></script>
+    <script th:src="@{js/minDate.js}" type="text/javascript"></script>
+
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+
+    <link th:href="@{css/updateSchedule.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="/admin/admin"></div>
+<div class="d-flex align-items-start justify-content-start position-relative mt-3 margin-side-bar">
+    <div class="d-inline-block w-100">
+        <h3 th:text="#{h.addScreening}"></h3>
+        <div class="ms-3 mb-3" id="screening-form">
+            <form th:action="@{admin/add-screening}" th:object="${screening}" method="post">
+                <div class="mb-3 mt-3 wrapper">
+                    <label for="movie-name" th:text="#{label.movie.name}"></label>
+                    <input class="form-control w-25" id="movie-name" name="movie" type="text"
+                           th:attr="name='movie'">
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="date" class="form-label" th:text="#{label.date}"></label>
+                        <input type="date" id="date" class="form-control w-25" th:attr="name='screeningDate'"
+                               min=""/>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label class="form-label" th:text="#{label.startTime}"></label>
+                        <input type="time" class="form-control w-25" name="startTime"
+                               min="09:00:00" max="22:00:00" th:attr="name='screeningStartTime'"/>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label class="form-label" th:text="#{label.endTime}"></label>
+                        <input type="time" class="form-control w-25" name="endTime"
+                               min="09:00:00" max="00:00:00" th:attr="name='screeningEndTime'"/>
+                </div>
+
+                <div class="d-inline-block alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                    <p class="mb-0" th:each="err : ${#fields.allErrors()}" th:text="#{__${err}__}"></p>
+                </div>
+
+                <!--                <div class="alert alert-danger" th:if="${#fields.hasErrors('global')}">-->
+                <!--                    <p th:each="err : ${#fields.errors('global')}" th:text="#{__${err}__}"></p>-->
+                <!--                </div>-->
+
+                <button type="submit" class="d-block btn btn-primary mb-2" style="width: 100px" th:text="#{button.save}">
+                </button>
+            </form>
+        </div>
+
+        <h3>Schedule</h3>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{label.movie.name}"></th>
+                <th scope="col" th:text="#{label.date}"></th>
+                <th scope="col" th:text="#{label.startTime}"></th>
+                <th scope="col" th:text="#{label.endTime}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="screening : ${screenings}">
+                <td th:text="${screening.movie.movieName}"></td>
+                <td th:text="${screening.screeningDate}"></td>
+                <td th:text="${screening.screeningStartTime}"></td>
+                <td th:text="${screening.screeningEndTime}"></td>
+                <td>
+                    <form th:action="@{admin/delete-screening}" method="post">
+                        <input th:attr="name='id'" th:value="${screening.id}" hidden>
+                        <button type="submit" class="btn btn-danger" th:text="#{button.delete}"></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

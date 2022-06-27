@@ -1,0 +1,204 @@
+header {
+    z-index: 100;
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+}
+
+button {
+    border: 0;
+}
+
+form {
+    margin-bottom: 0 !important;
+}
+
+.flex-div-center {
+    display: flex;
+    align-items: center;
+}
+
+.flex-item-center {
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.padding-custom {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+}
+
+.button-logo {
+    border-width: 0;
+    margin-bottom: 0;
+    margin-right: 15px;
+    padding: 0 0 0 0;
+    height: 48px;
+    width: 48px;
+    background-color: var(--bs-dark);
+}
+
+.form-control-dark {
+    color: #fff;
+    background-color: var(--bs-dark);
+    border-color: var(--bs-gray);
+}
+
+.form-control-dark:focus {
+    color: #fff;
+    background-color: var(--bs-dark);
+    border-color: #fff;
+    box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
+}
+
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}
+
+.ht-1 {
+    height: 40px;
+}
+
+.vw-25 {
+    width: 25vw;
+}
+
+.text-small {
+    font-size: 85%;
+}
+
+.dropdown-toggle {
+    outline: 0;
+}
+
+.header-reference {
+    display: block;
+    padding: .5rem 1rem;
+    color: white;
+    text-decoration: none;
+    background-color: var(--bs-dark);
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header-reference {
+        transition: none
+    }
+}
+
+.header-reference:focus, .header-reference:hover {
+    color: gray;
+}
+
+.header-reference.disabled {
+    color: gold;
+    pointer-events: none;
+    cursor: default
+}
+
+.header-reference:active {
+    color: grey;
+}
+
+.header-reference {
+    padding-right: .5rem !important;
+    padding-left: .5rem !important
+}
+
+.text-end {
+    margin-bottom: 0;
+}
+
+.container-header {
+    margin-left: 48px;
+    margin-right: 48px;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+    z-index: 100;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+@media (max-width: 620px) {
+    .col-3 {
+        width: 30vw !important;
+    }
+
+    .ml-auto {
+        margin-left: 0 !important;
+    }
+
+    .justify-content-center-max-620 {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .container-header {
+        margin-left: 48px !important;
+        margin-right: 48px !important;
+    }
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+    background-color: white;
+    color: black;
+    position: relative;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    font-size: 12px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-button {
+    color: black;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    border: 0 none;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    right: -20px;
+    top: 30px;
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: white;
+}
+
+.mx-6 {
+    margin-right: 15rem !important;
+    margin-left: 15rem !important
+}
+
+

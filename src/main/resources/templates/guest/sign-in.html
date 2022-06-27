@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <base href="/"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{image/cinema-logo.svg}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/sign-in.css}" rel="stylesheet">
+
+</head>
+<body class="text-center">
+
+<main class="form-signin">
+    <form method="get" th:action="@{/main}">
+        <button type="submit">
+            <img class="mb-4" th:src="@{image/cinema-logo.svg}" width="57" height="57"
+                 alt="Cinema Logo">
+        </button>
+    </form>
+
+    <form th:action="@{/login}" th:object="${user}" method="post">
+        <h1 class="h3 mb-3 fw-normal" th:text="#{label.sign-in}"></h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput"
+                   placeholder="Login" th:field="*{userLogin}">
+            <label for="floatingInput" th:text="#{label.login}"></label>
+        </div>
+        <div class="form-floating">
+
+            <input type="password" class="form-control" id="floatingPassword"
+                   placeholder="Password" th:field="*{userPassword}">
+            <label for="floatingPassword" th:text="#{label.password}"></label>
+        </div>
+
+        <div class="d-inline-block alert-danger" th:if="${param.get('error')}">
+            <p class="mb-0">Error</p>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" th:text="#{button.sign-in}"></button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+    </form>
+</main>
+</body>

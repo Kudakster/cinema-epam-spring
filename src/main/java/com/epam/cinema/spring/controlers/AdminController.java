@@ -97,12 +97,14 @@ public class AdminController {
     }
 
     @PostMapping(value = "/add-screening")
-    public String addScreening(@Valid @ModelAttribute("screening") ScreeningDto screeningDto, BindingResult result) {
+    public String addScreening(@Valid @ModelAttribute("screening") ScreeningDto screeningDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("screenings", screeningService.findScreeningsByDate(LocalDate.now()));
             return Pages.Admin.SCHEDULE_PAGE;
         }
 
         if (!movieService.isMovieExist(screeningDto.getMovieName())) {
+            model.addAttribute("screenings", screeningService.findScreeningsByDate(LocalDate.now()));
             ObjectError error = new ObjectError("global", "screening.movieNotExist");
             result.addError(error);
             return Pages.Admin.SCHEDULE_PAGE;
@@ -124,7 +126,12 @@ public class AdminController {
     }
 
     @PostMapping(value = "/delete-screening")
-    public String deleteScreening(@RequestParam("id") Integer id) {
+    public String deleteScreening(@RequestParam("id") Integer id, Model model) {
+        if (screeningService.isScreeningHaveTickets(id)) {
+            model.addAttribute("error", "screening.haveTicket");
+            return Pages.Admin.ADMIN_PAGE;
+        }
+
         Screening screening = new Screening();
         screening.setId(id);
         screeningService.deleteScreening(screening);
@@ -134,7 +141,7 @@ public class AdminController {
     @PostMapping(value = "/delete-movie")
     public String deleteMovie(@RequestParam("movie-id") Integer id, Model model) {
         if (screeningService.isScreeningExistByMovieId(id)) {
-            model.addAttribute("error", "This movie can't be delete");
+            model.addAttribute("error", "movie.delete.error");
             return Pages.Admin.ADMIN_PAGE;
         }
 

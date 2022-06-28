@@ -1,6 +1,7 @@
 package com.epam.cinema.spring.service;
 
 import com.epam.cinema.spring.enity.Screening;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,13 +17,15 @@ public interface IScreeningService {
 
     List<Screening> findScreeningsByDate(LocalDate date);
 
-    List<Screening> findScreeningsByDateAndTime(LocalDate date, LocalTime time);
+    List<Screening> findScreeningsByDateAndTime(LocalDate date, LocalTime time, Sort.Direction direction, String sortBy);
 
     Screening addScreening(Screening screening);
 
     Screening updateScreening(Screening screening);
 
     boolean isScreeningExistByMovieId(Integer id);
+
+    boolean isScreeningHaveTickets(Integer id);
 
     void deleteScreening(Screening screening);
 }

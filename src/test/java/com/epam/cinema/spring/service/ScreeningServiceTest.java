@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -120,10 +121,10 @@ public class ScreeningServiceTest {
                 .screeningStartTime(LocalTime.of(4, 0))
                 .build();
 
-        given(screeningRepository.findByScreeningDateIsGreaterThanEqualAndScreeningStartTimeIsGreaterThanEqualOrderByScreeningStartTimeAsc(screening.getScreeningDate(), anotherScreening.getScreeningStartTime()))
+        given(screeningRepository.findByScreeningDateIsGreaterThanEqualAndScreeningStartTimeIsGreaterThanEqual(screening.getScreeningDate(), anotherScreening.getScreeningStartTime(), Sort.by(Sort.DEFAULT_DIRECTION, "screeningStartTime")))
                 .willReturn(List.of(anotherScreening));
 
-        List<Screening> screenings = screeningService.findScreeningsByDateAndTime(screening.getScreeningDate(), anotherScreening.getScreeningStartTime());
+        List<Screening> screenings = screeningService.findScreeningsByDateAndTime(screening.getScreeningDate(), anotherScreening.getScreeningStartTime(), Sort.Direction.ASC, "screeningStartTime");
         assertThat(screenings).isNotNull();
         assertThat(screenings.size()).isEqualTo(1);
         assertThat(screenings.get(0)).isEqualTo(anotherScreening);
@@ -140,10 +141,10 @@ public class ScreeningServiceTest {
                 .screeningStartTime(LocalTime.of(4, 0))
                 .build();
 
-        given(screeningRepository.findByScreeningDateIsGreaterThanEqualAndScreeningStartTimeIsGreaterThanEqualOrderByScreeningStartTimeAsc(screening.getScreeningDate(), screening.getScreeningStartTime()))
+        given(screeningRepository.findByScreeningDateIsGreaterThanEqualAndScreeningStartTimeIsGreaterThanEqual(screening.getScreeningDate(), screening.getScreeningStartTime(), Sort.by(Sort.DEFAULT_DIRECTION, "screeningStartTime")))
                 .willReturn(List.of(screening, anotherScreening));
 
-        Map<Movie, List<Screening>> resultMap = screeningService.getGroupedMapScreeningByMovie(screening.getScreeningDate());
+        Map<Movie, List<Screening>> resultMap = screeningService.getGroupedMapScreeningByMovie(screening.getScreeningDate(), Sort.Direction.ASC, "screeningStartTime");
         assertThat(resultMap).isNotNull();
         assertThat(resultMap.size()).isEqualTo(1);
         assertThat(resultMap.containsKey(movie)).isTrue();

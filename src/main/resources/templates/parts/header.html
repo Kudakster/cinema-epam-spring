@@ -62,11 +62,24 @@
                 <ul class="nav justify-content-start mb-md-0 ht-1 me-2" th:if="${dates != null}">
                     <li>
                         <form th:action="@{main}">
-                            <select name="date" class="header-reference" onchange="this.form.submit()">
-                                <option th:text="#{label.date}"></option>
-                                <option th:each="date : ${dates}" th:attr="name='date'" th:text="${date}" th:value="${date}"></option>
+                            <select name="date" class="d-inline-block header-reference" onchange="this.form.submit()">
+                                <option th:text="#{label.date}"  th:value="${date}"></option>
+                                <option th:each="date : ${dates}" th:attr="name='date'" th:text="${date}"
+                                        th:value="${date}"></option>
+                            </select>
+                            <select name="sortBy" class="d-inline-block header-reference" onchange="this.form.submit()">
+                                <option th:text="#{label.sortBy}" th:value="${sortBy}"></option>
+                                <option th:attr="name='sortBy'" th:text="Name"  th:value="movie.movieName"></option>
+                                <option th:attr="name='sortBy'" th:text="Time" th:value="screeningStartTime"></option>
+                                <option th:attr="name='sortBy'" th:text="Seat" th:value="seatAvailable"></option>
+                            </select>
+                            <select name="direction" class="d-inline-block header-reference" onchange="this.form.submit()">
+                                <option th:text="Order" th:value="${direction}"></option>
+                                <option th:attr="name='direction'" th:text="Ask" th:value="ask"></option>
+                                <option th:attr="name='direction'" th:text="Desc" th:value="desc"></option>
                             </select>
                         </form>
+
                     </li>
                 </ul>
 
@@ -109,10 +122,10 @@
     </div>
 </header>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#locales").change(function () {
             let selectedOption = $('#locales').val();
-            if (selectedOption !== ''){
+            if (selectedOption !== '') {
                 window.location.replace('main?lang=' + selectedOption);
             }
         });

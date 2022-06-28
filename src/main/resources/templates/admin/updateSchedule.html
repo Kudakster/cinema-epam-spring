@@ -24,35 +24,44 @@
                     <label for="movie-name" th:text="#{label.movie.name}"></label>
                     <input class="form-control w-25" id="movie-name" name="movie" type="text"
                            th:attr="name='movie'">
+                    <p th:if="${#fields.hasErrors('movieName')}" th:each="err : ${#fields.errors('movieName')}"  th:text="#{__${err}__}"
+                       class="error-input">
+                    </p>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="date" class="form-label" th:text="#{label.date}"></label>
-                        <input type="date" id="date" class="form-control w-25" th:attr="name='screeningDate'"
-                               min=""/>
+                    <input type="date" id="date" class="form-control w-25" th:attr="name='screeningDate'"
+                           min=""/>
+                    <p th:if="${#fields.hasErrors('screeningDate')}" th:each="err : ${#fields.errors('screeningDate')}"  th:text="#{__${err}__}"
+                       class="error-input">
+                    </p>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label class="form-label" th:text="#{label.startTime}"></label>
-                        <input type="time" class="form-control w-25" name="startTime"
-                               min="09:00:00" max="22:00:00" th:attr="name='screeningStartTime'"/>
+                    <input type="time" class="form-control w-25" name="startTime"
+                           min="09:00:00" max="22:00:00" th:attr="name='screeningStartTime'"/>
+                    <p th:if="${#fields.hasErrors('screeningStartTime')}" th:each="err : ${#fields.errors('screeningStartTime')}"  th:text="#{__${err}__}"
+                       class="error-input">
+                    </p>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label class="form-label" th:text="#{label.endTime}"></label>
-                        <input type="time" class="form-control w-25" name="endTime"
-                               min="09:00:00" max="00:00:00" th:attr="name='screeningEndTime'"/>
+                    <input type="time" class="form-control w-25" name="endTime"
+                           min="09:00:00" max="00:00:00" th:attr="name='screeningEndTime'"/>
+                    <p th:if="${#fields.hasErrors('screeningEndTime')}" th:each="err : ${#fields.errors('screeningEndTime')}"  th:text="#{__${err}__}"
+                       class="error-input">
+                    </p>
                 </div>
 
-                <div class="d-inline-block alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-                    <p class="mb-0" th:each="err : ${#fields.allErrors()}" th:text="#{__${err}__}"></p>
+                <div class="d-inline-block alert alert-danger" th:if="${#fields.hasErrors('global')}">
+                    <p class="mb-0" th:each="err : ${#fields.errors('global')}" th:text="#{__${err}__}"></p>
                 </div>
 
-                <!--                <div class="alert alert-danger" th:if="${#fields.hasErrors('global')}">-->
-                <!--                    <p th:each="err : ${#fields.errors('global')}" th:text="#{__${err}__}"></p>-->
-                <!--                </div>-->
-
-                <button type="submit" class="d-block btn btn-primary mb-2" style="width: 100px" th:text="#{button.save}">
+                <button type="submit" class="d-block btn btn-primary mb-2" style="width: 100px"
+                        th:text="#{button.save}">
                 </button>
             </form>
         </div>

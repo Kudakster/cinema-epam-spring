@@ -9,6 +9,4 @@ import java.util.Optional;
 @Repository
 public interface AuditoriumRepository extends JpaRepository<Auditorium, Integer> {
     Optional<Auditorium> findByAuditoriumName(String auditoriumName);
-
-
 }

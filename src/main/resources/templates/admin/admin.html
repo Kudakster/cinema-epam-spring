@@ -44,7 +44,7 @@
     </div>
     <div class="d-inline-block margin-header margin-side-bar w-100">
         <div class="align-content-center error-input" th:if="${error != null}">
-            <p class="error-screening" th:text="${error}"></p>
+            <p class="error-screening" th:text="#{__${error}__}"></p>
         </div>
     </div>
 </div>

@@ -5,6 +5,7 @@ import com.epam.cinema.spring.enity.*;
 import com.epam.cinema.spring.service.implementation.ScreeningService;
 import com.epam.cinema.spring.service.implementation.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,23 +21,32 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping(value = "/")
 public class MainController {
-    private final ScreeningService screeningService;
+    @Autowired
+    private ScreeningService screeningService;
 
-    private final SeatService seatService;
-
-    public MainController(ScreeningService screeningService, SeatService seatService) {
-        this.screeningService = screeningService;
-        this.seatService = seatService;
-    }
+    @Autowired
+    private SeatService seatService;
 
     @GetMapping(value = "/main")
-    public String getMainPage(Model model, @RequestParam(required = false) LocalDate date) {
+    public String getMainPage(Model model, @RequestParam(required = false) LocalDate date,
+                              @RequestParam(required = false) String direction, @RequestParam(required = false) String sortBy) {
         if (date == null) {
             date = LocalDate.now();
         }
 
-        Map<Movie, List<Screening>> screeningByMovie = screeningService.getGroupedMapScreeningByMovie(date);
+        if (direction == null) {
+            direction = "ask";
+        }
+
+        if (sortBy == null) {
+            sortBy = "screeningStartTime";
+        }
+
+        Map<Movie, List<Screening>> screeningByMovie = screeningService.getGroupedMapScreeningByMovie(date, getDirection(direction), sortBy);
         List<LocalDate> weekLocalDateList = getListOfDate(new Date(System.currentTimeMillis()).getTime(), 7);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("date", date);
+        model.addAttribute("direction", direction);
         model.addAttribute("dates", weekLocalDateList);
         model.addAttribute("screenings", screeningByMovie);
         return Pages.MAIN_PAGE;
@@ -71,5 +81,13 @@ public class MainController {
             dateList.add(date);
         }
         return dateList;
+    }
+
+    private Sort.Direction getDirection(String direction) {
+        if (direction.equalsIgnoreCase("desc")) {
+            return Sort.Direction.DESC;
+        } else {
+            return Sort.Direction.ASC;
+        }
     }
 }

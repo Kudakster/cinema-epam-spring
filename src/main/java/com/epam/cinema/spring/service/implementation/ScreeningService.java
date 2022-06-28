@@ -2,9 +2,13 @@ package com.epam.cinema.spring.service.implementation;
 
 import com.epam.cinema.spring.enity.Movie;
 import com.epam.cinema.spring.enity.Screening;
+import com.epam.cinema.spring.enity.SeatReserved;
 import com.epam.cinema.spring.repository.ScreeningRepository;
+import com.epam.cinema.spring.repository.SeatReservedRepository;
+import com.epam.cinema.spring.repository.TicketRepository;
 import com.epam.cinema.spring.service.IScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,6 +21,12 @@ import java.util.stream.Collectors;
 public class ScreeningService implements IScreeningService {
     @Autowired
     private ScreeningRepository screeningRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
+
+    @Autowired
+    private SeatReservedRepository seatReservedRepository;
 
     @Override
     public Optional<Screening> findScreeningById(Integer id) {
@@ -39,23 +49,28 @@ public class ScreeningService implements IScreeningService {
     }
 
     @Override
-    public List<Screening> findScreeningsByDateAndTime(LocalDate date, LocalTime time) {
-        return screeningRepository.findByScreeningDateIsGreaterThanEqualAndScreeningStartTimeIsGreaterThanEqualOrderByScreeningStartTimeAsc(date, time);
+    public List<Screening> findScreeningsByDateAndTime(LocalDate date, LocalTime time, Sort.Direction direction, String sortBy) {
+        return screeningRepository.findByScreeningDateIsGreaterThanEqualAndScreeningStartTimeIsGreaterThanEqual(date, time, Sort.by(direction, sortBy));
     }
 
-    public Map<Movie, List<Screening>> getGroupedMapScreeningByMovie(LocalDate date) {
+    public Map<Movie, List<Screening>> getGroupedMapScreeningByMovie(LocalDate date, Sort.Direction direction, String sortBy) {
         Map<Movie, List<Screening>> map = new LinkedHashMap<>();
+        List<Screening> screeningList;
         LocalTime time = LocalTime.MIDNIGHT;
         if (date.isEqual(LocalDate.now())) {
             time = LocalTime.now();
         }
 
-        List<Screening> screeningList = findScreeningsByDateAndTime(date, time);
+        if (sortBy.equals("seatAvailable")) {
+            screeningList = findScreeningsByDateAndTime(date, time, Sort.Direction.ASC, "screeningStartTime");
+            screeningList = sortBySeatReserved(screeningList, direction);
+        } else {
+            screeningList = findScreeningsByDateAndTime(date, time, direction, sortBy);
+        }
 
         if (screeningList != null) {
             map = screeningList.stream()
-                    .collect(Collectors.groupingBy(Screening::getMovie));
-            map = sortByValue(map);
+                    .collect(Collectors.groupingByConcurrent(Screening::getMovie));
         }
         return map;
     }
@@ -76,22 +91,27 @@ public class ScreeningService implements IScreeningService {
     }
 
     @Override
+    public boolean isScreeningHaveTickets(Integer id) {
+        return ticketRepository.existsBySeatReserved_Screening_Id(id);
+    }
+
+    @Override
     public void deleteScreening(Screening screening) {
         screeningRepository.delete(screening);
     }
 
-    private static Map<Movie, List<Screening>> sortByValue(Map<Movie, List<Screening>> map) {
-        List<Map.Entry<Movie, List<Screening>>> list = new LinkedList<>(map.entrySet());
-        list.sort(Map.Entry.comparingByValue((o1, o2) -> {
-            if (o1.get(0).getScreeningStartTime().getLong(ChronoField.MINUTE_OF_DAY) > o2.get(0).getScreeningEndTime().getLong(ChronoField.MINUTE_OF_DAY)) {
-                return 1;
-            } else if (o1.get(0).getScreeningStartTime().getLong(ChronoField.MINUTE_OF_DAY) < o2.get(0).getScreeningStartTime().getLong(ChronoField.MINUTE_OF_DAY)) {
-                return -1;
-            }
-            return 0;
-        }));
-        Map<Movie, List<Screening>> finalMap = new LinkedHashMap<>();
-        list.forEach(e -> finalMap.put(e.getKey(), e.getValue()));
-        return finalMap;
+    private List<Screening> sortBySeatReserved(List<Screening> list, Sort.Direction direction) {
+        Map<Screening, Integer> seatAvailableMap = new LinkedHashMap<>();
+        list.forEach(screening -> seatAvailableMap.put(screening, Math.toIntExact(seatReservedRepository.countByScreening_Id(screening.getId()))));
+
+        if (direction == Sort.Direction.DESC) {
+            return seatAvailableMap.entrySet()
+                    .stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .map(Map.Entry::getKey).collect(Collectors.toList());
+        }
+
+        return seatAvailableMap.entrySet()
+                .stream().sorted(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey).collect(Collectors.toList());
     }
 }

@@ -116,6 +116,7 @@ public class AdminController {
 
         String err = screeningValidationService.validateScreening(screening);
         if (!err.isBlank()) {
+            model.addAttribute("screenings", screeningService.findScreeningsByDate(LocalDate.now()));
             ObjectError error = new ObjectError("global", err);
             result.addError(error);
             return Pages.Admin.SCHEDULE_PAGE;

@@ -60,12 +60,16 @@ public class UserController {
     }
 
     @PostMapping(value = "/buy-ticket")
-    public String buyTicket(@RequestParam("screeningId") Integer screeningID, @RequestParam("seatId") Integer... seatId) {
+    public String buyTicket(@RequestParam("screeningId") Integer screeningID, @RequestParam(required = false, value = "seatId") Integer... seatId) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(principal instanceof UserDetails userDetails)) {
             return "redirect:/guest/login";
         }
         User user = userService.findUserByLogin(userDetails.getUsername()).orElseThrow();
+
+        if (seatId == null) {
+            return "redirect:/main";
+        }
 
         if (Arrays.stream(seatId).anyMatch(id -> seatReservedService.existsBySeatIdAndScreeningId(id, screeningID))) {
             return "/main";

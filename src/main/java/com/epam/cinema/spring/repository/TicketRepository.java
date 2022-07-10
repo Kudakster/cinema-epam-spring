@@ -15,4 +15,5 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     boolean existsBySeatReserved_Screening_Id(Integer id);
 
+    long countBySeatReserved_Screening_ScreeningDateGreaterThanEqual(LocalDate screeningDate);
 }

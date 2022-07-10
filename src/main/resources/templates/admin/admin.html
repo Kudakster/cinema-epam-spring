@@ -35,9 +35,8 @@
                 <a class="section-reference" th:href="@{admin/auditorium}" id="auditorium" th:text="#{label.auditorium}"></a>
             </div>
             <ul class="justify-content-center rounded mx-4">
-                <li><a class="header-reference mb-3 bg-dark rounded-3" th:text="#{label.currentSession}"></a>
-                </li>
-                <li><a class="header-reference mb-3 bg-dark rounded-3" th:text="#{label.statistic}"></a>
+                <li><a class="header-reference mb-3 bg-dark rounded-3" th:href="@{admin/statistic}"
+                       th:text="#{label.statistic}"></a>
                 </li>
             </ul>
         </div>

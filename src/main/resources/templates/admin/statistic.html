@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <base href="/"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div th:insert="admin/admin"></div>
+<div class="d-flex align-items-start justify-content-start position-relative mt-3 margin-side-bar">
+    <h3 th:text="#{label.soldTickets}"></h3>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th scope="col" th:text="#{label.day}"></th>
+            <th scope="col" th:text="#{label.week}"></th>
+            <th scope="col" th:text="#{label.month}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${ticketSoldByDay}"></td>
+            <td th:text="${ticketSoldByWeek}"></td>
+            <td th:text="${ticketSoldByMonth}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

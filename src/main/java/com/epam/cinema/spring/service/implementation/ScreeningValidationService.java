@@ -76,5 +76,4 @@ public class ScreeningValidationService {
                 (screening.getScreeningStartTime().isAfter(endTime) &&
                         screening.getScreeningEndTime().isAfter(endTime));
     }
-
 }

@@ -1,8 +1,6 @@
 package com.epam.cinema.spring.enity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -12,6 +10,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 @Table(name = "seats")
 public class Seat {
     @Id
@@ -35,38 +35,6 @@ public class Seat {
         this.seatNumber = seatNumber;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Auditorium getAuditorium() {
-        return auditorium;
-    }
-
-    public void setAuditorium(Auditorium auditorium) {
-        this.auditorium = auditorium;
-    }
-
-    public Integer getSeatRow() {
-        return seatRow;
-    }
-
-    public void setSeatRow(Integer seatRow) {
-        this.seatRow = seatRow;
-    }
-
-    public Integer getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(Integer seatNumber) {
-        this.seatNumber = seatNumber;
-    }
-
     @Override
     public String toString() {
         return "Seat{" +
@@ -87,6 +55,6 @@ public class Seat {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(auditorium, seatRow, seatNumber);
     }
 }

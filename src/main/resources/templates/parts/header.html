@@ -126,7 +126,7 @@
         $("#locales").change(function () {
             let selectedOption = $('#locales').val();
             if (selectedOption !== '') {
-                window.location.replace('main?lang=' + selectedOption);
+                window.location.replace(window.location.pathname + '?lang=' + selectedOption);
             }
         });
     });

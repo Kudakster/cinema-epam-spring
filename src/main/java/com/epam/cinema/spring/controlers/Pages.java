@@ -20,6 +20,6 @@ public class Pages {
         public static final String MOVIES_PAGE = "/admin/movies";
         public static final String SCHEDULE_PAGE = "/admin/updateSchedule";
         public static final String UPDATE_MOVIE_PAGE = "/admin/updateMovie";
-
+        public static final String STATISTIC = "/admin/statistic";
     }
 }

@@ -1,9 +1,6 @@
 package com.epam.cinema.spring.enity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -16,6 +13,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @ToString
+@Getter
+@Setter
 @Table(name = "movies")
 public class Movie {
     @Id
@@ -55,94 +54,6 @@ public class Movie {
 
     @Column(name = "movie_description", length = 300)
     private String movieDescription;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getMovieName() {
-        return movieName;
-    }
-
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
-    }
-
-    public String getMovieActors() {
-        return movieActors;
-    }
-
-    public void setMovieActors(String movieActors) {
-        this.movieActors = movieActors;
-    }
-
-    public String getMovieDirection() {
-        return movieDirection;
-    }
-
-    public void setMovieDirection(String movieDirection) {
-        this.movieDirection = movieDirection;
-    }
-
-    public String getMovieGenre() {
-        return movieGenre;
-    }
-
-    public void setMovieGenre(String movieGenre) {
-        this.movieGenre = movieGenre;
-    }
-
-    public String getMovieCountry() {
-        return movieCountry;
-    }
-
-    public void setMovieCountry(String movieCountry) {
-        this.movieCountry = movieCountry;
-    }
-
-    public String getMovieTrailerUrl() {
-        return movieTrailerUrl;
-    }
-
-    public void setMovieTrailerUrl(String movieTrailerUrl) {
-        this.movieTrailerUrl = movieTrailerUrl;
-    }
-
-    public String getMovieImgUrl() {
-        return movieImgUrl;
-    }
-
-    public void setMovieImgUrl(String movieImgUrl) {
-        this.movieImgUrl = movieImgUrl;
-    }
-
-    public LocalDate getMovieReleaseDate() {
-        return movieReleaseDate;
-    }
-
-    public void setMovieReleaseDate(LocalDate movieReleaseDate) {
-        this.movieReleaseDate = movieReleaseDate;
-    }
-
-    public String getMovieDurationMin() {
-        return movieDurationMin;
-    }
-
-    public void setMovieDurationMin(String movieDurationMin) {
-        this.movieDurationMin = movieDurationMin;
-    }
-
-    public String getMovieDescription() {
-        return movieDescription;
-    }
-
-    public void setMovieDescription(String movieDescription) {
-        this.movieDescription = movieDescription;
-    }
 
     @Override
     public boolean equals(Object o) {

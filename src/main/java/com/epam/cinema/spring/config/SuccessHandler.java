@@ -15,7 +15,6 @@ import java.util.Collection;
 @Component
 public class SuccessHandler implements AuthenticationSuccessHandler {
 
-
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override

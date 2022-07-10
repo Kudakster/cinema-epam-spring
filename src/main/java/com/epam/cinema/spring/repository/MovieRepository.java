@@ -15,6 +15,4 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     List<Movie> findByOrderByIdDesc(Pageable pageable);
 
     boolean existsByMovieName(String movieName);
-
-
 }

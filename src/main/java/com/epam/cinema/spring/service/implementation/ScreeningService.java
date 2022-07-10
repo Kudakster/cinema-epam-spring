@@ -107,11 +107,13 @@ public class ScreeningService implements IScreeningService {
         if (direction == Sort.Direction.DESC) {
             return seatAvailableMap.entrySet()
                     .stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                    .map(Map.Entry::getKey).collect(Collectors.toList());
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
         }
 
         return seatAvailableMap.entrySet()
                 .stream().sorted(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey).collect(Collectors.toList());
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 }

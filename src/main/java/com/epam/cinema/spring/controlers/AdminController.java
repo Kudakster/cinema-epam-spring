@@ -46,6 +46,9 @@ public class AdminController {
     @Autowired
     private ImageUploadingService imageUploadingService;
 
+    @Autowired
+    private TicketService ticketService;
+
     @GetMapping(value = "")
     public String getAdminPage() {
         return Pages.Admin.ADMIN_PAGE;
@@ -90,6 +93,18 @@ public class AdminController {
         return Pages.Admin.UPDATE_MOVIE_PAGE;
     }
 
+    @GetMapping(value = "/statistic")
+    public String getStatistic(Model model) {
+        long ticketSoldByDay = ticketService.countTicketByDate(LocalDate.now());
+        long ticketSoldByWeek = ticketService.countTicketByDate(LocalDate.now().minusWeeks(1));
+        long ticketSoldByMonth = ticketService.countTicketByDate(LocalDate.now().minusMonths(1));
+
+        model.addAttribute("ticketSoldByDay", ticketSoldByDay);
+        model.addAttribute("ticketSoldByWeek", ticketSoldByWeek);
+        model.addAttribute("ticketSoldByMonth", ticketSoldByMonth);
+        return Pages.Admin.STATISTIC;
+    }
+
     @PostMapping(value = "/update-auditorium")
     public String updateAuditoriumName(@ModelAttribute Auditorium auditorium) {
         auditoriumService.updateAuditorium(auditorium);
@@ -99,15 +114,13 @@ public class AdminController {
     @PostMapping(value = "/add-screening")
     public String addScreening(@Valid @ModelAttribute("screening") ScreeningDto screeningDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("screenings", screeningService.findScreeningsByDate(LocalDate.now()));
-            return Pages.Admin.SCHEDULE_PAGE;
+            return getSchedulePage(screeningDto, model);
         }
 
         if (!movieService.isMovieExist(screeningDto.getMovieName())) {
-            model.addAttribute("screenings", screeningService.findScreeningsByDate(LocalDate.now()));
             ObjectError error = new ObjectError("global", "screening.movieNotExist");
             result.addError(error);
-            return Pages.Admin.SCHEDULE_PAGE;
+            return getSchedulePage(screeningDto, model);
         }
 
         Screening screening = screeningDto.getScreeningFromDto();
@@ -116,10 +129,9 @@ public class AdminController {
 
         String err = screeningValidationService.validateScreening(screening);
         if (!err.isBlank()) {
-            model.addAttribute("screenings", screeningService.findScreeningsByDate(LocalDate.now()));
             ObjectError error = new ObjectError("global", err);
             result.addError(error);
-            return Pages.Admin.SCHEDULE_PAGE;
+            return getSchedulePage(screeningDto, model);
         }
 
         screeningService.addScreening(screening);

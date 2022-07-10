@@ -20,6 +20,4 @@ public interface ScreeningRepository extends JpaRepository<Screening, Integer> {
     List<Screening> findByScreeningDateIsGreaterThanEqualAndScreeningStartTimeIsGreaterThanEqual(LocalDate screeningDate, LocalTime screeningStartTime, Sort by);
 
     boolean existsByMovie_Id(Integer id);
-
-
 }

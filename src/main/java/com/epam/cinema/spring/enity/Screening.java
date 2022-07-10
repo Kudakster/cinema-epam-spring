@@ -1,8 +1,6 @@
 package com.epam.cinema.spring.enity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -14,6 +12,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 @Table(name = "screenings")
 public class  Screening {
     @Id
@@ -37,54 +37,6 @@ public class  Screening {
 
     @Column(name = "screening_end_time")
     private LocalTime screeningEndTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Auditorium getAuditorium() {
-        return auditorium;
-    }
-
-    public void setAuditorium(Auditorium auditorium) {
-        this.auditorium = auditorium;
-    }
-
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public LocalDate getScreeningDate() {
-        return screeningDate;
-    }
-
-    public void setScreeningDate(LocalDate screeningDate) {
-        this.screeningDate = screeningDate;
-    }
-
-    public LocalTime getScreeningStartTime() {
-        return screeningStartTime;
-    }
-
-    public void setScreeningStartTime(LocalTime screeningStartTime) {
-        this.screeningStartTime = screeningStartTime;
-    }
-
-    public LocalTime getScreeningEndTime() {
-        return screeningEndTime;
-    }
-
-    public void setScreeningEndTime(LocalTime screeningEndTime) {
-        this.screeningEndTime = screeningEndTime;
-    }
 
     @Override
     public String toString() {

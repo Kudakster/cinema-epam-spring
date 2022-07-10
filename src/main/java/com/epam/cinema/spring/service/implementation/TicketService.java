@@ -26,11 +26,6 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public List<Ticket> findTicketsByUserID(Integer id) {
-        return ticketRepository.findByUser_Id(id);
-    }
-
-    @Override
     public List<Ticket> findTicketsByUserIDAndCurrentTime(Integer id) {
         return ticketRepository.findByUser_IdAndSeatReserved_Screening_ScreeningDateIsGreaterThanEqual(id, LocalDate.now());
     }
@@ -38,6 +33,11 @@ public class TicketService implements ITicketService {
     @Override
     public Ticket addTicket(Ticket ticket) {
         return ticketRepository.save(ticket);
+    }
+
+    @Override
+    public long countTicketByDate(LocalDate localDate) {
+        return ticketRepository.countBySeatReserved_Screening_ScreeningDateGreaterThanEqual(localDate);
     }
 
     @Override

@@ -23,7 +23,7 @@
                 <div class="mb-3 mt-3 wrapper">
                     <label for="movie-name" th:text="#{label.movie.name}"></label>
                     <input class="form-control w-25" id="movie-name" name="movie" type="text"
-                           th:attr="name='movie'">
+                           th:attr="name='movieName'">
                     <p th:if="${#fields.hasErrors('movieName')}" th:each="err : ${#fields.errors('movieName')}"  th:text="#{__${err}__}"
                        class="error-input">
                     </p>

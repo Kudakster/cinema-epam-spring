@@ -9,6 +9,7 @@
     <script th:src="@{js/user.js}" type="text/javascript"></script>
     <script th:src="@{js/setFormStatus.js}" type="text/javascript"></script>
     <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{css/main.css}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link th:href="@{css/user.css}" rel="stylesheet">
@@ -24,6 +25,9 @@
                 <label for="login" class="form-label" th:text="#{label.login}"></label>
                 <input type="text" class="form-control" id="login" th:placeholder="#{placeholder.enter.login}" name="login"
                        maxlength="30" th:attr="name='userLogin'" th:value="${user.getUserLogin()}">
+                <p th:if="${#fields.hasErrors('global')}" th:each="err : ${#fields.errors('global')}"  th:text="#{__${err}__}"
+                   class="error-input">
+                </p>
             </div>
 
             <div class="mb-3 mt-3" id="firstname-form">

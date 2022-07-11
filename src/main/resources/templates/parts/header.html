@@ -46,8 +46,6 @@
             <ul class="nav justify-content-start mb-md-0 ht-1" id="ref">
                 <li><a th:href="@{/main}" class="header-reference" th:text="#{label.main}"></a>
                 </li>
-                <li><a href="#" class="header-reference" th:text="#{label.about}"></a>
-                </li>
                 <li sec:authorize="hasRole('ROLE_ADMIN')">
                     <form class="text-end" method="get"
                           th:action="@{admin/movies}">
@@ -69,14 +67,14 @@
                             </select>
                             <select name="sortBy" class="d-inline-block header-reference" onchange="this.form.submit()">
                                 <option th:text="#{label.sortBy}" th:value="${sortBy}"></option>
-                                <option th:attr="name='sortBy'" th:text="Name"  th:value="movie.movieName"></option>
-                                <option th:attr="name='sortBy'" th:text="Time" th:value="screeningStartTime"></option>
-                                <option th:attr="name='sortBy'" th:text="Seat" th:value="seatAvailable"></option>
+                                <option th:attr="name='sortBy'" th:text="#{label.name}"  th:value="movie.movieName"></option>
+                                <option th:attr="name='sortBy'" th:text="#{label.time}" th:value="screeningStartTime"></option>
+                                <option th:attr="name='sortBy'" th:text="#{label.seat}" th:value="seatAvailable"></option>
                             </select>
                             <select name="direction" class="d-inline-block header-reference" onchange="this.form.submit()">
-                                <option th:text="Order" th:value="${direction}"></option>
-                                <option th:attr="name='direction'" th:text="Ask" th:value="ask"></option>
-                                <option th:attr="name='direction'" th:text="Desc" th:value="desc"></option>
+                                <option th:text="#{label.order}" th:value="${direction}"></option>
+                                <option th:attr="name='direction'" th:text="#{label.asc}" th:value="ask"></option>
+                                <option th:attr="name='direction'" th:text="#{label.desc}" th:value="desc"></option>
                             </select>
                         </form>
 

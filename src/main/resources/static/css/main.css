@@ -72,6 +72,11 @@ iframe {
     transform: translate(-50%, -50%);
 }
 
+.error-input {
+    font-size: 16px;
+    color: red;
+}
+
 @media (min-aspect-ratio: 16/9) {
     .video-container iframe {
         /* height = 100 * (9 / 16) = 56.25 */

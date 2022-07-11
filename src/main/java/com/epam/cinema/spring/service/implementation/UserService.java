@@ -37,6 +37,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public boolean isUserExistWithSameLogin(String login) {
+        return userRepository.existsByUserLogin(login);
+    }
+
+    @Override
     public User addUser(User user) {
         if (userRepository.existsByUserLogin(user.getUserLogin())) {
             return null;

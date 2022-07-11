@@ -27,11 +27,6 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public List<Movie> findMoviesByNamePattern(String name) {
-        return null;
-    }
-
-    @Override
     public List<Movie> findMoviesByPagination(Pageable pageable) {
         return movieRepository.findByOrderByIdDesc(pageable);
     }

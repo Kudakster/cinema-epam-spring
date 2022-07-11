@@ -40,7 +40,7 @@
         </div>
 
         <div class="d-inline-block alert-danger" th:if="${param.get('error')}">
-            <p class="mb-0">Error</p>
+            <p class="mb-0" th:text="#{user.notFound}"></p>
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" th:text="#{button.sign-in}"></button>

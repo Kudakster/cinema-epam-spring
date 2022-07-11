@@ -16,4 +16,6 @@ public interface SeatReservedRepository extends JpaRepository<SeatReserved, Inte
     long countByScreening_Id(Integer id);
 
     boolean existsBySeat_IdAndScreening_Id(Integer seatId, Integer screeningId);
+
+
 }

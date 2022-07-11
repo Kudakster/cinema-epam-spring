@@ -7,6 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -45,13 +47,18 @@ public class UserController {
     }
 
     @PostMapping(value = "/update-profile")
-    public String updateProfile(@ModelAttribute User user) {
+    public String updateProfile(@ModelAttribute User user, BindingResult bindingResult) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(principal instanceof UserDetails userDetails)) {
             return "redirect:/guest/login";
         }
-        User userFromDB = userService.findUserByLogin(userDetails.getUsername()).orElseThrow();
 
+        if (userService.isUserExistWithSameLogin(user.getUserLogin())) {
+            bindingResult.addError(new ObjectError("global", "user.loginTaken"));
+            return Pages.User.USER_PAGE;
+        }
+
+        User userFromDB = userService.findUserByLogin(userDetails.getUsername()).orElseThrow();
         userFromDB.setUserLogin(user.getUserLogin());
         userFromDB.setUserFirstname(user.getUserFirstname());
         userFromDB.setUserSurname(user.getUserSurname());

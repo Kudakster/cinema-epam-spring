@@ -9,9 +9,7 @@ import java.util.Arrays;
 @Getter
 @Setter
 public class SeatReservedDto {
-
     private Integer[] seatId;
-
     private Screening screening;
 
     @Override

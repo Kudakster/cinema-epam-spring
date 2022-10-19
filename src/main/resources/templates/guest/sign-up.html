@@ -28,16 +28,21 @@
             <label for="login" class="form-label" th:text="#{label.login}"></label>
             <input type="text" class="form-control" id="login" th:placeholder="#{placeholder.enter.login}" name="login"
                    maxlength="30" th:attr="name='userLogin'">
-        </div>
-
-        <div class="d-inline-block alert alert-danger" th:if="${#fields.hasErrors('global')}">
-            <p class="mb-0" th:each="err : ${#fields.allErrors()}" th:text="#{__${err}__}"></p>
+            <p th:if="${#fields.hasErrors('userLogin')}" th:each="err : ${#fields.errors('userLogin')}"  th:text="#{__${err}__}"
+               class="error-input">
+            </p>
+            <p th:if="${#fields.hasErrors('global')}" th:each="err : ${#fields.errors('global')}"  th:text="#{__${err}__}"
+               class="error-input">
+            </p>
         </div>
 
         <div class="mb-3" id="pwd-form">
             <label for="pwd" class="form-label" th:text="#{label.password}"></label>
             <input type="password" class="form-control" id="pwd" th:placeholder="#{placeholder.enter.password}" name="password"
                    maxlength="30" th:attr="name='userPassword'">
+            <p th:if="${#fields.hasErrors('userPassword')}" th:each="err : ${#fields.errors('userPassword')}"  th:text="#{__${err}__}"
+               class="error-input">
+            </p>
         </div>
 
         <div class="mb-3" id="confirm-password-form">
@@ -50,28 +55,36 @@
             <label for="firstname" class="form-label" th:text="#{label.firstname}"></label>
             <input type="text" class="form-control" id="firstname" th:placeholder="#{placeholder.enter.firstname}" name="firstname"
                    maxlength="30" th:attr="name='userFirstname'">
+            <p th:if="${#fields.hasErrors('userFirstname')}" th:each="err : ${#fields.errors('userFirstname')}"  th:text="#{__${err}__}"
+               class="error-input">
+            </p>
         </div>
 
         <div class="mb-3 mt-3" id="surname-form">
             <label for="surname" class="form-label" th:text="#{label.surname}"></label>
             <input type="text" class="form-control" id="surname" th:placeholder="#{placeholder.enter.surname}" name="surname"
                    maxlength="30" th:attr="name='userSurname'">
+            <p th:if="${#fields.hasErrors('userSurname')}" th:each="err : ${#fields.errors('userSurname')}"  th:text="#{__${err}__}"
+               class="error-input">
+            </p>
         </div>
 
         <div class="mb-3 mt-3" id="email-form">
             <label for="email" class="form-label" th:text="#{label.email}"></label>
             <input type="email" class="form-control" id="email" th:placeholder="#{placeholder.enter.email}" name="email"
                    th:attr="name='userEmail'">
+            <p th:if="${#fields.hasErrors('userEmail')}" th:each="err : ${#fields.errors('userEmail')}"  th:text="#{__${err}__}"
+               class="error-input">
+            </p>
         </div>
 
         <div class="mb-3 mt-3" id="phone-number-form">
             <label for="phone-number" class="form-label" th:text="#{label.phoneNumber}"></label>
             <input type="text" class="form-control" id="phone-number" th:placeholder="#{placeholder.enter.phoneNumber}"
                    name="phone-number" maxlength="13" th:attr="name='userPhonenumber'">
-        </div>
-
-        <div class="d-inline-block alert alert-danger" th:if="${!#fields.hasErrors('global') && #fields.hasErrors()}">
-            <p class="mb-0" th:each="err : ${#fields.allErrors()}" th:text="#{__${err}__}"></p>
+            <p th:if="${#fields.hasErrors('userPhonenumber')}" th:each="err : ${#fields.errors('userPhonenumber')}"  th:text="#{__${err}__}"
+               class="error-input">
+            </p>
         </div>
 
         <button type="submit" class="btn btn-primary" id="submit-button" th:text="#{button.submit}" disabled></button>

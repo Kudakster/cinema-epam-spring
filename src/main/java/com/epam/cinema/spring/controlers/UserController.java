@@ -8,10 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,28 +40,27 @@ public class UserController {
             return "redirect:/guest/login";
         }
         User user = userService.findUserByLogin(userDetails.getUsername()).orElseThrow();
-
         model.addAttribute("tickets", ticketService.findTicketsByUserIDAndCurrentTime(user.getId()));
         model.addAttribute("user", user);
         return Pages.User.USER_PAGE;
     }
 
     @PostMapping(value = "/update-profile")
-    public String updateProfile(@ModelAttribute User user, BindingResult bindingResult) {
+    public String updateProfile(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(principal instanceof UserDetails userDetails)) {
             return "redirect:/guest/login";
         }
 
-        if (userService.isUserExistWithSameLogin(user.getUserLogin())) {
-            bindingResult.addError(new ObjectError("global", "user.loginTaken"));
-            return Pages.User.USER_PAGE;
+        if (bindingResult.hasErrors()) {
+            return getUserPage(model);
         }
 
         User userFromDB = userService.findUserByLogin(userDetails.getUsername()).orElseThrow();
-        userFromDB.setUserLogin(user.getUserLogin());
         userFromDB.setUserFirstname(user.getUserFirstname());
         userFromDB.setUserSurname(user.getUserSurname());
+        userFromDB.setUserEmail(user.getUserEmail());
+        userFromDB.setUserPhonenumber(user.getUserPhonenumber());
         userService.updateUser(userFromDB);
         return "redirect:/user";
     }

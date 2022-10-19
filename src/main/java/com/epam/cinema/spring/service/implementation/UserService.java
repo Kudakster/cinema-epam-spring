@@ -5,6 +5,7 @@ import com.epam.cinema.spring.repository.UserRepository;
 import com.epam.cinema.spring.service.IUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,5 +59,22 @@ public class UserService implements IUserService {
     @Override
     public void deleteUser(User user) {
         userRepository.delete(user);
+    }
+
+    public static void sortUser() {
+        List<User> list = new ArrayList<>();
+        list.add(new User(18, "John"));
+        list.add(new User(13, "Bob"));
+        list.add(new User(19, "Marta"));
+        list.add(new User(15, "Lewis0"));
+
+        list.stream()
+                .filter(user -> user.getId() >= 18)
+                .map(User::getUserLogin)
+                .forEach(System.out::println);
+    }
+
+    public static void main(String[] args) {
+        sortUser();
     }
 }

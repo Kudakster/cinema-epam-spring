@@ -73,11 +73,6 @@ p {
     cursor: pointer;
 }
 
-.button-trash {
-    transition: 200ms;
-    cursor: pointer;
-}
-
 .bottom-redact {
     outline: none;
     border: 0;

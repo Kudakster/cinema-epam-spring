@@ -32,7 +32,7 @@ public class GuestController {
     @PostMapping(value = "/sign-up")
     public String registration(@Valid @ModelAttribute("user") User user, BindingResult result) {
         if (result.hasErrors()) {
-            return Pages.Guest.REGISTRATION_PAGE;
+            return getRegistrationPage(user);
         }
         user.setUserRole(UserRole.USER.toString());
         user.setUserPassword(bCryptPasswordEncoder.encode(user.getUserPassword()));

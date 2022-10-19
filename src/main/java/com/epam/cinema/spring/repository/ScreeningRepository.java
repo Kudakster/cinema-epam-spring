@@ -3,7 +3,6 @@ package com.epam.cinema.spring.repository;
 import com.epam.cinema.spring.enity.Screening;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

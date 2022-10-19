@@ -10,7 +10,7 @@
 </head>
 <body>
 <div th:insert="admin/admin"></div>
-<div class="d-flex align-items-start justify-content-start position-relative mt-3 margin-side-bar">
+<div class="d-flex align-items-start flex-wrap position-relative mt-3 margin-side-bar me-5">
     <h3 th:text="#{label.soldTickets}"></h3>
     <table class="table table-hover table-bordered">
         <thead>
@@ -28,6 +28,7 @@
         </tr>
         </tbody>
     </table>
+    <a th:href="@{admin/download-statistic-pdf}" class="link-primary" th:text="Download"></a>
 </div>
 </body>
 </html>

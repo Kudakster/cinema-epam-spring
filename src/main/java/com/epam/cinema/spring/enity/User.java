@@ -27,7 +27,6 @@ public class User {
     @Column(name = "user_login", nullable = false, length = 30)
     private String userLogin;
 
-    @NotNull
     @Column(name = "user_password", nullable = false, length = 30)
     private String userPassword;
 
@@ -57,6 +56,11 @@ public class User {
 
     @Column(name = "user_role", nullable = false, length = 50)
     private String userRole;
+
+    public User(Integer id, String userLogin) {
+        this.id = id;
+        this.userLogin = userLogin;
+    }
 
     @Override
     public boolean equals(Object o) {

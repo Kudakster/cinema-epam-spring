@@ -8,6 +8,7 @@ import com.epam.cinema.spring.enity.Seat;
 import com.epam.cinema.spring.service.implementation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,6 +50,9 @@ public class AdminController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private DocumentService documentService;
 
     @GetMapping(value = "")
     public String getAdminPage() {
@@ -203,5 +208,13 @@ public class AdminController {
 
         seatService.updateSeats(seatList);
         return "redirect:/admin/auditorium";
+    }
+
+    @GetMapping(value = "/download-statistic-pdf",
+    produces = MediaType.APPLICATION_PDF_VALUE)
+    public void getDocument(HttpServletResponse response) {
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", "attachment; filename=1.pdf");
+        documentService.getStatistics(response);
     }
 }

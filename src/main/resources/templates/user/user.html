@@ -23,36 +23,49 @@
         <form th:action="@{user/update-profile}" th:object="${user}" method="post" id="basic-form">
             <div class="mb-3 mt-3" id="login-form">
                 <label for="login" class="form-label" th:text="#{label.login}"></label>
-                <input type="text" class="form-control" id="login" th:placeholder="#{placeholder.enter.login}" name="login"
-                       maxlength="30" th:attr="name='userLogin'" th:value="${user.getUserLogin()}">
-                <p th:if="${#fields.hasErrors('global')}" th:each="err : ${#fields.errors('global')}"  th:text="#{__${err}__}"
-                   class="error-input">
-                </p>
+                <input type="text" class="form-control" id="login" th:placeholder="#{placeholder.enter.login}"
+                       maxlength="30" th:attr="name='userLogin'" th:value="${user.getUserLogin()}" readonly>
             </div>
 
             <div class="mb-3 mt-3" id="firstname-form">
                 <label for="firstname" class="form-label" th:text="#{label.firstname}"></label>
-                <input type="text" class="form-control" id="firstname" th:placeholder="#{placeholder.enter.firstname}" name="firstname"
+                <input type="text" class="form-control" id="firstname" th:placeholder="#{placeholder.enter.firstname}"
                        maxlength="30" th:attr="name='userFirstname'" th:value="${user.getUserFirstname()}">
+                <p th:if="${#fields.hasErrors('userFirstname')}" th:each="err : ${#fields.errors('userFirstname')}"  th:text="#{__${err}__}"
+                   class="error-input">
+                </p>
             </div>
 
             <div class="mb-3 mt-3" id="surname-form">
                 <label for="surname" class="form-label" th:text="#{label.surname}"></label>
-                <input type="text" class="form-control" id="surname" th:placeholder="#{placeholder.enter.surname}" name="surname"
+                <input type="text" class="form-control" id="surname" th:placeholder="#{placeholder.enter.surname}"
                        maxlength="30" th:attr="name='userSurname'" th:value="${user.getUserSurname()}">
+                <p th:if="${#fields.hasErrors('userSurname')}" th:each="err : ${#fields.errors('userSurname')}"  th:text="#{__${err}__}"
+                   class="error-input">
+                </p>
             </div>
 
             <div class="mb-3 mt-3" id="email-form">
                 <label for="email" class="form-label" th:text="#{label.email}"></label>
-                <input type="email" class="form-control" id="email" th:placeholder="#{placeholder.enter.email}" name="email"
-                       th:value="${user.getUserEmail()}" disabled>
+                <input type="email" class="form-control" id="email" th:placeholder="#{placeholder.enter.email}"
+                       th:attr="name='userEmail'" th:value="${user.getUserEmail()}">
+                <p th:if="${#fields.hasErrors('userEmail')}" th:each="err : ${#fields.errors('userEmail')}"  th:text="#{__${err}__}"
+                   class="error-input">
+                </p>
             </div>
 
             <div class="mb-3 mt-3" id="phone-number-form">
                 <label for="phone-number" class="form-label" th:text="#{label.phoneNumber}"></label>
                 <input type="text" class="form-control" id="phone-number" th:placeholder="#{placeholder.enter.phoneNumber}"
-                       name="phone-number" maxlength="13" th:value="${user.getUserPhonenumber()}" disabled>
+                       name="phone-number" maxlength="13" th:attr="name='userPhonenumber'" th:value="${user.getUserPhonenumber()}">
+                <p th:if="${#fields.hasErrors('userPhonenumber')}" th:each="err : ${#fields.errors('userPhonenumber')}"  th:text="#{__${err}__}"
+                   class="error-input">
+                </p>
             </div>
+
+            <p th:if="${#fields.hasAnyErrors()}" th:each="err : ${#fields.errors()}"  th:text="#{__${err}__}"
+               class="error-input">
+            </p>
 
             <button type="submit" class="btn btn-primary" id="submit-button" th:text="#{button.updateProfile}" disabled>
             </button>

@@ -62,7 +62,6 @@ function required(idElement, formName, minLength, maxLength, regex, regexMessage
         function_parameter(idElement);
         createElement(idElement); //Create and check if exist (not good)
         checkInput(value, formName, idElement, minLength, maxLength, regex, regexMessage);
-        validateLogin();
     })
 }
 

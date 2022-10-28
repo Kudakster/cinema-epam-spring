@@ -5,3 +5,122 @@
 .margin-header-double {
     margin-top: 144px !important;
 }
+
+.screening-movie-img {
+    height: 300px;
+    width: 200px;
+    margin-left: 20px;
+}
+
+.screening-movie-info {
+    padding-top: 30px;
+    display: flex;
+}
+
+.screen {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.seats {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+}
+
+.hall-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.free-seat {
+    height: 30px;
+    width: 20px;
+    background-color: white;
+    border-radius: 2px;
+    border: 1px solid #6caadf;
+    margin-right: 2px;
+}
+
+.booked-seat {
+    height: 30px;
+    width: 20px;
+    border-radius: 2px;
+    margin-right: 2px;
+    background-color: red;
+    border: 1px solid darkred;
+}
+
+.taken-seat {
+    height: 30px;
+    width: 20px;
+    background-color: cornflowerblue;
+    border-radius: 2px;
+    border: 1px solid cornflowerblue;
+    margin-right: 2px;
+}
+
+.free-seat:hover {
+    background-color: rgba(149,200,244,0.329412);
+}
+
+.seats-check {
+    min-width: 800px;
+    width: 60%;
+}
+
+.seats-buy {
+    position: fixed;
+    height: 90%;
+    width: 40%;
+    background-color: #f7f8f9;
+}
+
+.ticket-bucket {
+    list-style-type: none;
+    margin-right: 15px;
+    padding-left: 2rem;
+    height: 50vh;
+
+    overflow: scroll;
+    overflow-x:hidden;
+}
+
+.ticket-bucket::-webkit-scrollbar {
+    display: none;
+}
+
+.ticket {
+    padding: 16px 10px 16px 16px;
+    display: grid;
+    grid-column-gap: 5px;
+    grid-template-columns: 20% minmax(100px, 150px) auto 38px;
+    align-items: center;
+    height: 100px;
+    width: auto;
+    border-radius: 5px;
+    border: 1px solid red;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+.ticket-info {
+    font-size: 18px;
+    font-weight: 200;
+}
+
+.btn-buy-ticket {
+    position: absolute;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 50px;
+    width: 80%;
+    border-radius: 10px;
+    height: 100px;
+    font-size: 42px;
+}

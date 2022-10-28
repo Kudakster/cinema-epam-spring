@@ -18,7 +18,7 @@ public class DocumentService {
     private Document document;
 
     @SneakyThrows
-    public void getStatistics(HttpServletResponse response) {
+    public void writeStatistics(HttpServletResponse response) {
         document = new Document();
         PdfWriter.getInstance(document, response.getOutputStream());
         document.open();

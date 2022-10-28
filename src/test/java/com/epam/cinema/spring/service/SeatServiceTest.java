@@ -74,9 +74,9 @@ public class SeatServiceTest {
                 .seatRow(1)
                 .build();
 
-        given(seatRepository.findAll()).willReturn(List.of(seat, anotherSeat));
+        given(seatService.findAllSeats(1)).willReturn(List.of(seat, anotherSeat));
 
-        List<Seat> seat = seatService.findAllSeats();
+        List<Seat> seat = seatService.findAllSeats(1);
         assertThat(seat).isNotNull();
         assertThat(seat.size()).isEqualTo(2);
     }
@@ -120,7 +120,7 @@ public class SeatServiceTest {
         given(seatReservedService.findAllSeatReservedByScreeningId(screeningId)).willReturn(List.of(seatReserved));
         given(seatRepository.findByAuditorium_Id(seat.getAuditorium().getId())).willReturn(seats);
 
-        List<Seat> seatList = seatService.findAllAvailableSeatsByAuditoriumIdAndScreeningId(seat.getAuditorium().getId(), screeningId);
+        Map<Integer, Map<Seat, Boolean>> seatList = seatService.findAllAvailableSeatsByAuditoriumIdAndScreeningId(seat.getAuditorium().getId(), screeningId);
         assertThat(seatList).isNotNull();
         assertThat(seatList.size()).isEqualTo(1);
     }
@@ -135,9 +135,9 @@ public class SeatServiceTest {
                 .seatRow(1)
                 .build();
 
-        given(seatRepository.findAll()).willReturn(List.of(seat, anotherSeat));
+        given(seatService.findAllSeats(1)).willReturn(List.of(seat, anotherSeat));
 
-        Map<Integer, Long> auditoriumMap= seatService.findAllRowsAndSeats();
+        Map<Integer, Long> auditoriumMap= seatService.findAllRowsAndSeatsByAuditoriumId(1);
         assertThat(auditoriumMap).isNotNull();
         assertThat(auditoriumMap.size()).isEqualTo(1);
     }
@@ -145,9 +145,9 @@ public class SeatServiceTest {
     @DisplayName("JUnit test for findAllRowAndSeat method")
     @Test
     public void givenSeatObject_whenFindAllRowsAndSeats_thenReturnNull() {
-        given(seatRepository.findAll()).willReturn(List.of());
+        given(seatService.findAllSeats(1)).willReturn(List.of());
 
-        Map<Integer, Long> auditoriumMap = seatService.findAllRowsAndSeats();
+        Map<Integer, Long> auditoriumMap = seatService.findAllRowsAndSeatsByAuditoriumId(1);
         assertThat(auditoriumMap).isNull();
     }
 

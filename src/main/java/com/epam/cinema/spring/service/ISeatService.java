@@ -25,7 +25,7 @@ public interface ISeatService {
      *
      * @return the list
      */
-    List<Seat> findAllSeats();
+    List<Seat> findAllSeats(Integer id);
 
     /**
      * Find all seats by auditorium id list.
@@ -42,17 +42,17 @@ public interface ISeatService {
      * @param screeningId  the screening id
      * @return the list
      */
-    List<Seat> findAllAvailableSeatsByAuditoriumIdAndScreeningId(Integer auditoriumId, Integer screeningId);
+    Map<Integer, Map<Seat, Boolean>> findAllAvailableSeatsByAuditoriumIdAndScreeningId(Integer auditoriumId, Integer screeningId);
 
     /**
      * Find all rows and seats map.
      *
      * @return the map
      */
-    Map<Integer, Long> findAllRowsAndSeats();
+    Map<Integer, Long> findAllRowsAndSeatsByAuditoriumId(Integer id);
 
     /**
-     * Add seat seat.
+     * Add seat.
      *
      * @param movie the movie
      * @return the seat

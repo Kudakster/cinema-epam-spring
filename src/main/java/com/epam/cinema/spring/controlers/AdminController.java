@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -73,7 +72,7 @@ public class AdminController {
     @GetMapping(value = "/auditorium")
     public String getAuditoriumPage(Model model) {
         Integer auditoriumID = 1;
-        Map<Integer, Long> seats = seatService.findAllRowsAndSeats();
+        Map<Integer, Long> seats = seatService.findAllRowsAndSeatsByAuditoriumId(auditoriumID);
         Auditorium auditorium = auditoriumService.findAuditoriumById(auditoriumID).orElseThrow();
         model.addAttribute("seats", seats);
         model.addAttribute("auditorium", auditorium);
@@ -215,6 +214,6 @@ public class AdminController {
     public void getDocument(HttpServletResponse response) {
         response.setContentType("application/pdf");
         response.addHeader("Content-Disposition", "attachment; filename=1.pdf");
-        documentService.getStatistics(response);
+        documentService.writeStatistics(response);
     }
 }

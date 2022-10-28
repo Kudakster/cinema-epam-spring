@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/")
@@ -65,10 +63,9 @@ public class MainController {
 
     @GetMapping(value = "/screening")
     public String getScreeningPage(@RequestParam("screening-id") Integer id, @ModelAttribute("seatReserved") SeatReservedDto seatReserved, Model model) {
-        Screening screening = screeningService.findScreeningById(id).orElseThrow();
-        List<Seat> seats = seatService.findAllAvailableSeatsByAuditoriumIdAndScreeningId(1, id);
-        Map<Integer, List<Seat>> seatsMap = seats.stream().collect(Collectors.groupingBy(Seat::getSeatRow));
-        model.addAttribute("seats", seatsMap);
+        Screening screening = screeningService.findScreeningById(id).get();
+        Map<Integer, Map<Seat, Boolean>> seats = seatService.findAllAvailableSeatsByAuditoriumIdAndScreeningId(1, id);
+        model.addAttribute("seats", seats);
         model.addAttribute("screening", screening);
         return Pages.SCREENING_PAGE;
     }

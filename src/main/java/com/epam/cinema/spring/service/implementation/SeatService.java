@@ -25,29 +25,42 @@ public class SeatService implements ISeatService {
     }
 
     @Override
-    public List<Seat> findAllSeats() {
-        return seatRepository.findAll();
-    }
-
-    @Override
-    public List<Seat> findAllSeatsByAuditoriumId(Integer id) {
+    public List<Seat> findAllSeats(Integer id) {
         return seatRepository.findByAuditorium_Id(id);
     }
 
     @Override
-    public List<Seat> findAllAvailableSeatsByAuditoriumIdAndScreeningId(Integer auditoriumId, Integer screeningId) {
+    public List<Seat> findAllSeatsByAuditoriumId(Integer id) {
+        return seatRepository.findByAuditorium_IdOrderBySeatRowAscSeatNumberAsc(id);
+    }
+
+    @Override
+    public Map<Integer, Map<Seat, Boolean>> findAllAvailableSeatsByAuditoriumIdAndScreeningId(Integer auditoriumId, Integer screeningId) {
         List<Seat> seatReserved = seatReservedService.findAllSeatReservedByScreeningId(screeningId)
                 .stream()
                 .map(SeatReserved::getSeat)
                 .toList();
+
         List<Seat> seats = findAllSeatsByAuditoriumId(auditoriumId);
-        seats.removeAll(seatReserved);
-        return seats;
+        Map<Integer, List<Seat>> integerListMap = seats.stream().collect(Collectors.groupingBy(Seat::getSeatRow));
+        Map<Integer, Map<Seat, Boolean>> map = new HashMap<>();
+        integerListMap.forEach((key, list) -> {
+            Map<Seat, Boolean> seatBooleanMap = new TreeMap<>((o1, o2) -> {
+                if (o1.getSeatNumber().equals(o2.getSeatNumber())) {
+                    return 0;
+                } else {
+                    return o1.getSeatNumber() < o2.getSeatNumber() ? -1 : 1;
+                }
+            });
+            list.forEach(seat -> seatBooleanMap.put(seat, !seatReserved.contains(seat)));
+            map.put(key, seatBooleanMap);
+        });
+        return map;
     }
 
     @Override
-    public Map<Integer, Long> findAllRowsAndSeats() {
-        List<Seat> seats = findAllSeats();
+    public Map<Integer, Long> findAllRowsAndSeatsByAuditoriumId(Integer auditoriumId) {
+        List<Seat> seats = findAllSeats(auditoriumId);
 
         if (seats != null && seats.size() != 0) {
             return seats.stream()
@@ -89,17 +102,18 @@ public class SeatService implements ISeatService {
 
     @Override
     public void deleteSeats(List<Seat> seatList) {
+        int auditoriumId = 1;
         Set<Integer> setRowAndNumber = seatList.stream()
                 .map(seat -> Integer.parseInt(seat.getSeatRow() + "" + seat.getSeatNumber()))
                 .collect(Collectors.toSet());
-        List<Seat> deleteSeatsList = findAllSeats();
+        List<Seat> deleteSeatsList = findAllSeats(auditoriumId);
 
         if (deleteSeatsList != null) {
             setRowAndNumber.forEach(System.out::println);
             deleteSeatsList.removeIf(seat -> setRowAndNumber.stream()
                     .anyMatch(num -> num == Integer.parseInt(seat.getSeatRow() + "" + seat.getSeatNumber())));
             if (deleteSeatsList.size() > 0) {
-               seatRepository.deleteAll(deleteSeatsList);
+                seatRepository.deleteAll(deleteSeatsList);
             }
         }
     }
